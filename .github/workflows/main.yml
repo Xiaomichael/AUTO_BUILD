@@ -31,7 +31,21 @@ jobs:
       CCACHE_HARDLINK: "true"
       CI: "false"
     steps:
-
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          root-reserve-mb: 8192
+          temp-reserve-mb: 2048
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+          remove-codeql: 'true'
+          
+      - name: Configure Git
+        run: |
+         git config --global user.name "build"
+         git config --global user.email "3436378798@qq.com"
+         
       - name: 1.下载编译工具
         run: |
           mkdir -p $GITHUB_WORKSPACE/kernel_workspace
